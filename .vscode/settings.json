@@ -1,0 +1,22 @@
+{
+  "dart.flutterSdkPath": "~/fvm/versions/3.16.3",
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "[dart]": {
+    "editor.formatOnType": false,
+    "editor.rulers": [120],
+    "editor.selectionHighlight": true,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off",
+    "editor.defaultFormatter": "Dart-Code.dart-code",
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wrappingIndent": "same",
+    "editor.wordWrapColumn": 120,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    }
+  },
+}
