@@ -8,5 +8,7 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: SplashRoute.page, initial: true),
     AutoRoute(page: DummyUIStep1Route.page),
     AutoRoute(page: DummyUIStep2Route.page),
+    AutoRoute(page: NewsRoute.page),
+    AutoRoute(page: CounterRoute.page),
   ];
 }

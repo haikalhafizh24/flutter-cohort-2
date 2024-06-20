@@ -40,7 +40,7 @@ class SplashPage extends StatelessWidget {
                   description:
                       'Introducing of state management using flutter_bloc. Level: 1',
                   ontap: () {
-                    AutoRouter.of(context).push(const DummyUIStep1Route());
+                    AutoRouter.of(context).push(const CounterRoute());
                   },
                 ),
                 const Divider(
@@ -75,7 +75,7 @@ class SplashPage extends StatelessWidget {
                   title: 'News App',
                   description: 'API calling using free source from NYTimes',
                   ontap: () {
-                    AutoRouter.of(context).push(const DummyUIStep1Route());
+                    AutoRouter.of(context).push(const NewsRoute());
                   },
                 ),
                 const Divider(
