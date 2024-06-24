@@ -1,4 +1,4 @@
-// Create entity if cubit need more than 1 validation
+// Create entity if cubit has more than 1 state
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 

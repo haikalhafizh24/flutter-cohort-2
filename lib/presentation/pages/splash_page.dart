@@ -52,7 +52,7 @@ class SplashPage extends StatelessWidget {
                   description:
                       'Flutter state management using flutter_bloc to handle validation in text field. Level: 2',
                   ontap: () {
-                    AutoRouter.of(context).push(const DummyUIStep1Route());
+                    AutoRouter.of(context).push(const InputValidationRoute());
                   },
                 ),
                 const Divider(
