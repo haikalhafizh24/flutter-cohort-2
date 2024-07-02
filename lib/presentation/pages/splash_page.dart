@@ -64,7 +64,7 @@ class SplashPage extends StatelessWidget {
                   description:
                       'Flutter state management using flutter_bloc to calculate simple syntax. Level: 3',
                   ontap: () {
-                    AutoRouter.of(context).push(const DummyUIStep1Route());
+                    AutoRouter.of(context).push(const CalculatorRoute());
                   },
                 ),
                 const Divider(

@@ -11,5 +11,6 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: NewsRoute.page),
     AutoRoute(page: CounterRoute.page),
     AutoRoute(page: InputValidationRoute.page),
+    AutoRoute(page: CalculatorRoute.page),
   ];
 }
