@@ -87,7 +87,7 @@ class SplashPage extends StatelessWidget {
                   description:
                       'Create a to do list that saved in local storage using hydrated_bloc. Level: 4',
                   ontap: () {
-                    AutoRouter.of(context).push(const DummyUIStep1Route());
+                    AutoRouter.of(context).push(const ToDoRoute());
                   },
                 ),
               ],

@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:student_lecture_app/application/cubit/calculator_cubit.dart';
+import 'package:student_lecture_app/application/calculator/calculator_cubit.dart';
 import 'package:student_lecture_app/core/commons/colors_const.dart';
 import 'package:student_lecture_app/domain/calculator/calculator_entity.dart';
 import 'package:student_lecture_app/presentation/widgets/atoms/text_theme_extension.dart';
@@ -9,7 +9,7 @@ import 'package:student_lecture_app/presentation/widgets/molecules/platform_app_
 import 'package:student_lecture_app/presentation/widgets/organisms/text_form_field.dart';
 import 'package:student_lecture_app/presentation/widgets/organisms/ui_helper.dart';
 
-import 'widgets/badges.dart';
+import '../../widgets/molecules/badges.dart';
 
 @RoutePage()
 class CalculatorPage extends StatelessWidget {
