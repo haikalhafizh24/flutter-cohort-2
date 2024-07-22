@@ -14,11 +14,7 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: CalculatorRoute.page),
     AutoRoute(page: ToDoRoute.page),
     AutoRoute(page: CreateRoute.page),
-    // AutoRoute<CreateRoute>(
-    //   page: CreateRoute.page,
-    //   path: '/create',
-    //   guards: const [],
-    //   fullscreenDialog: false,
-    // )
+    AutoRoute(page: MostPopularRoute.page),
+    AutoRoute(page: TopStoriesRoute.page),
   ];
 }

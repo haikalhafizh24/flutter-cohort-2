@@ -18,7 +18,7 @@ class NewsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: UIHelper.padding(bottom: 8),
-      padding: UIHelper.padding(all: 12),
+      padding: UIHelper.padding(all: 10),
       decoration: BoxDecoration(
           border: Border.all(
             color: ColorConstant.lightGrey,
