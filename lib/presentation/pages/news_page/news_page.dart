@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_lecture_app/application/most_popular_article_cubit/most_popular_article_cubit.dart';
 import 'package:student_lecture_app/core/commons/colors_const.dart';
-import 'package:student_lecture_app/core/commons/constants.dart';
 import 'package:student_lecture_app/core/injection/injection.dart';
 import 'package:student_lecture_app/core/routes/app_router.gr.dart';
 import 'package:student_lecture_app/presentation/widgets/atoms/text_theme_extension.dart';
@@ -78,6 +77,8 @@ class NewsPage extends StatelessWidget {
                             (articles) => Column(
                                   children: [
                                     Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Column(
                                           children: [
@@ -114,14 +115,15 @@ class NewsPage extends StatelessWidget {
                                     UIHelper.verticalSpace(12),
                                     Column(
                                       children: List.generate(
-                                          3,
-                                          (index) => NewsCard(
-                                                title:
-                                                    'How to become software engineer',
-                                                description:
-                                                    'jill lepore \u2022  23 may 2024',
-                                                imageSource: Constants.dummyImg,
-                                              )),
+                                          articles.length.clamp(0, 3), (index) {
+                                        final data = articles[index];
+                                        return NewsCard(
+                                            title: data.title,
+                                            description:
+                                                '${data.byline} \u2022 ${data.publishedDateConverted}',
+                                            imageSource:
+                                                data.multimediaConverted);
+                                      }),
                                     )
                                   ],
                                 )));

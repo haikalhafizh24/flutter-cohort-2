@@ -15,14 +15,22 @@ class ArticleModel with _$ArticleModel {
     required String publishedDate,
   }) = _ArticleModel;
 
-  factory ArticleModel.fromMostPopular(Map<String, dynamic> json) => ArticleModel(
-        id: json['id'].toString(),
-        title: json['title'],
-        byline: json['byline'],
-        multimedia: (json['media'] as List).isEmpty ? [] : [json['media'][0]['media-metadata'][0]['url']],
-        publishedDate: json['published_date'],
-      );
+  factory ArticleModel.fromMostPopular(Map<String, dynamic> json) {
+    // ignore: avoid_print
+    print('Received JSON: $json');
+    return ArticleModel(
+      id: json['id'].toString(),
+      title: json['title'] as String? ?? '',
+      byline: json['byline'] as String? ?? '',
+      multimedia: multimediaFromJson(json['media']),
 
+      // (json['media'] as List).isEmpty
+      //     ? []
+      //     : [json['media'][0]['media-metadata'][0]['url']],
+
+      publishedDate: json['published_date'] as String? ?? '',
+    );
+  }
   String get publishedDateConverted {
     if (publishedDate.contains('T')) {
       return publishedDate.split('T')[0];
@@ -42,18 +50,31 @@ class ArticleModel with _$ArticleModel {
     return 'https://static01.nyt.com/${multimedia[0]}';
   }
 
-  factory ArticleModel.fromJson(Map<String, dynamic> json) => _$ArticleModelFromJson(json);
+  factory ArticleModel.fromJson(Map<String, dynamic> json) =>
+      _$ArticleModelFromJson(json);
 }
 
 bool isListOfStrings(List<dynamic> list) {
   return list.every((element) => element is String);
 }
 
-List<String> multimediaFromJson(dynamic type) {
-  if (isListOfStrings(type)) {
-    return type;
-  } else {
-    List<Map<String, dynamic>> type0 = type.cast<Map<String, dynamic>>();
-    return type0.map((e) => e['url'] as String).toList();
+List<String> multimediaFromJson(dynamic media) {
+  if (media == null || media is! List || media.isEmpty) {
+    return [];
   }
+
+  for (var item in media) {
+    if (item is Map<String, dynamic> && item.containsKey('media-metadata')) {
+      var mediaMetadata = item['media-metadata'];
+      if (mediaMetadata is List && mediaMetadata.isNotEmpty) {
+        var firstMetadata = mediaMetadata.first;
+        if (firstMetadata is Map<String, dynamic> &&
+            firstMetadata.containsKey('url')) {
+          return [firstMetadata['url'] as String];
+        }
+      }
+    }
+  }
+
+  return [];
 }

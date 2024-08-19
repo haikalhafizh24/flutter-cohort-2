@@ -1,11 +1,10 @@
 // ignore: implementation_imports
 import 'package:fpdart/src/either.dart';
-import 'package:injectable/injectable.dart';
 import 'package:student_lecture_app/domain/core/app_failure.dart';
 import 'package:student_lecture_app/domain/news/i_news_repository.dart';
 import 'package:student_lecture_app/infrastructure/common/dtos/article_model.dart';
 
-@LazySingleton(as: INewsRepository)
+// @LazySingleton(as: INewsRepository)
 class MockNewsRepository implements INewsRepository {
   @override
   Future<Either<AppFailure, List<ArticleModel>>> getMostPopular() async {
@@ -27,7 +26,6 @@ class MockNewsRepository implements INewsRepository {
 
   @override
   Future<Either<AppFailure, List<ArticleModel>>> getTopStories(String section) {
-    // TODO: implement getTopStories
     throw UnimplementedError();
   }
 }
