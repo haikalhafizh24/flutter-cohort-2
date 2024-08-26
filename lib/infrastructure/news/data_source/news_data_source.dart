@@ -17,6 +17,8 @@ class NewsDataSource {
   Future<List<ArticleModel>> getTopStories(String section) async {
     final response =
         await _apiHelper.get(path: ApiPathConstant.topStories(section));
+
+    print('Raw API Response: ${response.data}'); // Log the entire response
     final rawList = response.data as List;
     // print(rawList);
     return List.generate(
@@ -26,28 +28,35 @@ class NewsDataSource {
   Future<List<ArticleModel>> getMostPopular() async {
     try {
       final response = await _apiHelper.get(path: ApiPathConstant.mostPopular);
-      print('Raw API Response: ${response.data}');
+      print('Raw API Response: ${response.data}'); // Log the entire response
 
-      if (response.data is! List) {
-        throw Exception('Unexpected response format: expected a List');
+      final rawList = response.data as List?;
+      if (rawList == null) {
+        print('Results list is null');
+        return [];
       }
 
-      final rawList = response.data as List;
-      return rawList
-          .map((item) {
-            if (item is! Map<String, dynamic>) {
-              print('Item is not a Map: $item');
-              return null;
-            }
-            print('Processing item: $item');
-            return ArticleModel.fromMostPopular(item);
-          })
-          .whereType<ArticleModel>()
-          .toList();
+      return rawList.map((item) {
+        print('Processing item: $item'); // Log each item
+        return ArticleModel.fromMostPopular(item as Map<String, dynamic>);
+      }).toList();
     } catch (e, stackTrace) {
       print('Error in getMostPopular: $e');
       print('Stack trace: $stackTrace');
       rethrow;
     }
   }
+
+//   Future<List<ArticleModel>> getMostPopular() async {
+//     final response = await _apiHelper.get(path: ApiPathConstant.mostPopular);
+//     // ignore: avoid_print
+//     print('Raw API Response: ${response.data}');  // Log the entire response
+//     final rawList = response.data as List;
+//     // ignore: avoid_print
+//     logger.d(response);
+//     // print('ini responsenya $response');
+//     return List.generate(
+//         rawList.length.clamp(0, 20), (i) => ArticleModel.fromJson(rawList[i]));
+//   }
+// }
 }

@@ -36,16 +36,16 @@ class NewsPage extends StatelessWidget {
                       ?.copyWith(color: ColorConstant.grey),
                 ),
                 UIHelper.verticalSpace(12),
-                Container(
-                  padding: UIHelper.padding(vertical: 8, horizontal: 12),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: ColorConstant.primary),
-                    borderRadius: UIHelper.borderRadiusCircular(all: 8),
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      AutoRouter.of(context).push(const TopStoriesRoute());
-                    },
+                InkWell(
+                  onTap: () {
+                    AutoRouter.of(context).push(const TopStoriesRoute());
+                  },
+                  child: Container(
+                    padding: UIHelper.padding(vertical: 8, horizontal: 12),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: ColorConstant.primary),
+                      borderRadius: UIHelper.borderRadiusCircular(all: 8),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -98,7 +98,9 @@ class NewsPage extends StatelessWidget {
                                         InkWell(
                                           onTap: () {
                                             AutoRouter.of(context)
-                                                .push(const MostPopularRoute());
+                                                .push(MostPopularRoute(
+                                              articles: articles,
+                                            ));
                                           },
                                           child: Text(
                                             'See all',

@@ -23,14 +23,10 @@ class ArticleModel with _$ArticleModel {
       title: json['title'] as String? ?? '',
       byline: json['byline'] as String? ?? '',
       multimedia: multimediaFromJson(json['media']),
-
-      // (json['media'] as List).isEmpty
-      //     ? []
-      //     : [json['media'][0]['media-metadata'][0]['url']],
-
       publishedDate: json['published_date'] as String? ?? '',
     );
   }
+  
   String get publishedDateConverted {
     if (publishedDate.contains('T')) {
       return publishedDate.split('T')[0];
@@ -78,3 +74,12 @@ List<String> multimediaFromJson(dynamic media) {
 
   return [];
 }
+
+// @freezed
+// class ArticlesSectionCategory with _$ArticlesSectionCategory {
+//   const factory ArticlesSectionCategory.none() = _None;
+//   const factory ArticlesSectionCategory.arts() = _Arts;
+//   const factory ArticlesSectionCategory.automobiles() = _Automobiles;
+//   const factory ArticlesSectionCategory.business() = _Business;
+//   const factory ArticlesSectionCategory.
+// }

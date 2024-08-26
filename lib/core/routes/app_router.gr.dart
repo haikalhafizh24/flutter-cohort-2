@@ -12,6 +12,8 @@ import 'package:auto_route/auto_route.dart' as _i12;
 import 'package:flutter/material.dart' as _i14;
 import 'package:student_lecture_app/domain/todo/to_do_history_entitiy.dart'
     as _i13;
+import 'package:student_lecture_app/infrastructure/common/dtos/article_model.dart'
+    as _i15;
 import 'package:student_lecture_app/presentation/pages/calculator_page/calculator_page.dart'
     as _i1;
 import 'package:student_lecture_app/presentation/pages/counter_page/counter_page.dart'
@@ -81,9 +83,13 @@ abstract class $AppRouter extends _i12.RootStackRouter {
       );
     },
     MostPopularRoute.name: (routeData) {
+      final args = routeData.argsAs<MostPopularRouteArgs>();
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i7.MostPopularPage(),
+        child: _i7.MostPopularPage(
+          key: args.key,
+          articles: args.articles,
+        ),
       );
     },
     NewsRoute.name: (routeData) {
@@ -223,16 +229,40 @@ class InputValidationRoute extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.MostPopularPage]
-class MostPopularRoute extends _i12.PageRouteInfo<void> {
-  const MostPopularRoute({List<_i12.PageRouteInfo>? children})
-      : super(
+class MostPopularRoute extends _i12.PageRouteInfo<MostPopularRouteArgs> {
+  MostPopularRoute({
+    _i14.Key? key,
+    required List<_i15.ArticleModel> articles,
+    List<_i12.PageRouteInfo>? children,
+  }) : super(
           MostPopularRoute.name,
+          args: MostPopularRouteArgs(
+            key: key,
+            articles: articles,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'MostPopularRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i12.PageInfo<MostPopularRouteArgs> page =
+      _i12.PageInfo<MostPopularRouteArgs>(name);
+}
+
+class MostPopularRouteArgs {
+  const MostPopularRouteArgs({
+    this.key,
+    required this.articles,
+  });
+
+  final _i14.Key? key;
+
+  final List<_i15.ArticleModel> articles;
+
+  @override
+  String toString() {
+    return 'MostPopularRouteArgs{key: $key, articles: $articles}';
+  }
 }
 
 /// generated route for

@@ -25,6 +25,7 @@ class NewsCard extends StatelessWidget {
           ),
           borderRadius: UIHelper.borderRadiusCircular(all: 12)),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
             borderRadius: UIHelper.borderRadiusCircular(

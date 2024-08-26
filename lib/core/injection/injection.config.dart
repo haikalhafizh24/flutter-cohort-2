@@ -14,9 +14,11 @@ import 'package:injectable/injectable.dart' as _i2;
 import 'package:logger/logger.dart' as _i5;
 import 'package:student_lecture_app/application/most_popular_article_cubit/most_popular_article_cubit.dart'
     as _i11;
+import 'package:student_lecture_app/application/top_stories_cubit/top_stories_cubit.dart'
+    as _i12;
 import 'package:student_lecture_app/core/env/env.dart' as _i4;
 import 'package:student_lecture_app/core/routes/app_router.dart' as _i3;
-import 'package:student_lecture_app/core/utils/register_module.dart' as _i12;
+import 'package:student_lecture_app/core/utils/register_module.dart' as _i13;
 import 'package:student_lecture_app/domain/news/i_news_repository.dart' as _i9;
 import 'package:student_lecture_app/infrastructure/core/api_helper.dart' as _i7;
 import 'package:student_lecture_app/infrastructure/news/data_source/news_data_source.dart'
@@ -47,8 +49,10 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i10.NewsRepository(gh<_i8.NewsDataSource>()));
     gh.factory<_i11.MostPopularArticleCubit>(
         () => _i11.MostPopularArticleCubit(gh<_i9.INewsRepository>()));
+    gh.factory<_i12.TopStoriesCubit>(
+        () => _i12.TopStoriesCubit(gh<_i9.INewsRepository>()));
     return this;
   }
 }
 
-class _$RegisterModule extends _i12.RegisterModule {}
+class _$RegisterModule extends _i13.RegisterModule {}
