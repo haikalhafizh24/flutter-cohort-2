@@ -25,7 +25,21 @@ class MockNewsRepository implements INewsRepository {
   }
 
   @override
-  Future<Either<AppFailure, List<ArticleModel>>> getTopStories(String section) {
-    throw UnimplementedError();
+  Future<Either<AppFailure, List<ArticleModel>>> getTopStories(
+      String section) async {
+    try {
+      await Future.delayed(const Duration(seconds: 2));
+      final articles = [
+        ArticleModel(
+            id: '1',
+            title: 'Mock Top Story',
+            byline: 'Haikal',
+            multimedia: [],
+            publishedDate: '2024-04-25')
+      ];
+      return right(articles);
+    } catch (e) {
+      return left(AppFailure.fromServerSide(e.toString()));
+    }
   }
 }
