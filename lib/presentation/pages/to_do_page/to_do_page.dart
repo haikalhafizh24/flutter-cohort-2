@@ -20,9 +20,17 @@ class ToDoPage extends StatelessWidget {
       child: BlocBuilder<ToDoCubit, ToDoState>(
         builder: (context, state) {
           return Scaffold(
-            appBar: const PlatformAppBar(
+            appBar: PlatformAppBar(
               elevation: 4,
-              title: Text(
+              leading: IconButton(
+                onPressed: () {
+                  AutoRouter.of(context).push(const SplashRoute());
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                ),
+              ),
+              title: const Text(
                 'To Do App',
               ),
             ),

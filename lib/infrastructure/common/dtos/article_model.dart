@@ -11,7 +11,7 @@ class ArticleModel with _$ArticleModel {
     @JsonKey(name: 'short_url') required String id,
     required String title,
     required String byline,
-    @JsonKey(fromJson: multimediaFromJson) required List<String> multimedia,
+    required List<String> multimedia,
     required String publishedDate,
   }) = _ArticleModel;
 
@@ -26,7 +26,17 @@ class ArticleModel with _$ArticleModel {
       publishedDate: json['published_date'] as String? ?? '',
     );
   }
-  
+
+  factory ArticleModel.fromTopStories(Map<String, dynamic> json) {
+    return ArticleModel(
+      id: json['uri'] as String? ?? '',
+      title: json['title'] as String? ?? '',
+      byline: json['byline'] as String? ?? '',
+      multimedia: multimediaFromTopStoriesJson(json['multimedia']),
+      publishedDate: json['published_date'] as String? ?? '',
+    );
+  }
+
   String get publishedDateConverted {
     if (publishedDate.contains('T')) {
       return publishedDate.split('T')[0];
@@ -54,6 +64,17 @@ bool isListOfStrings(List<dynamic> list) {
   return list.every((element) => element is String);
 }
 
+List<String> multimediaFromTopStoriesJson(dynamic multimedia) {
+  if (multimedia == null || multimedia is! List || multimedia.isEmpty) {
+    return [];
+  }
+
+  return multimedia
+      .where((item) => item is Map<String, dynamic> && item['url'] != null)
+      .map((item) => item['url'] as String)
+      .toList();
+}
+
 List<String> multimediaFromJson(dynamic media) {
   if (media == null || media is! List || media.isEmpty) {
     return [];
@@ -74,12 +95,3 @@ List<String> multimediaFromJson(dynamic media) {
 
   return [];
 }
-
-// @freezed
-// class ArticlesSectionCategory with _$ArticlesSectionCategory {
-//   const factory ArticlesSectionCategory.none() = _None;
-//   const factory ArticlesSectionCategory.arts() = _Arts;
-//   const factory ArticlesSectionCategory.automobiles() = _Automobiles;
-//   const factory ArticlesSectionCategory.business() = _Business;
-//   const factory ArticlesSectionCategory.
-// }

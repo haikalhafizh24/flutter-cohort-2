@@ -31,8 +31,17 @@ class CreatePage extends StatelessWidget {
       child: BlocBuilder<ToDoCubit, ToDoState>(
         builder: (context, state) {
           return Scaffold(
-            appBar: const PlatformAppBar(
-              title: Text(
+            appBar: PlatformAppBar(
+              leading: IconButton(
+                onPressed: () {
+                  context.read<ToDoCubit>().resetState();
+                  AutoRouter.of(context).pop();
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                ),
+              ),
+              title: const Text(
                 'Create New Task',
               ),
             ),
@@ -51,18 +60,30 @@ class CreatePage extends StatelessWidget {
               ),
               child: ElevatedButton(
                 onPressed: () {
-                  if (state.showDescriptionErrorMsg != null) {
+                  final cubit = context.read<ToDoCubit>();
+                  cubit.save();
+                  // Memeriksa apakah ada error
+                  if (!cubit.state.showError) {
+                    AutoRouter.of(context).push(const ToDoRoute());
+                  } else {
+                    // Menampilkan pesan error
+                    String errorMsg = '';
+                    final state = cubit.state;
+                    if (state.showTitleErrorMsg != null &&
+                        state.showDescriptionErrorMsg != null) {
+                      errorMsg = 'Title and description cannot be empty';
+                    } else if (state.showTitleErrorMsg != null) {
+                      errorMsg = state.showTitleErrorMsg!;
+                    } else if (state.showDescriptionErrorMsg != null) {
+                      errorMsg = state.showDescriptionErrorMsg!;
+                    }
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(state.showDescriptionErrorMsg!),
+                        content: Text(errorMsg),
                         duration: const Duration(seconds: 2),
                         backgroundColor: ColorConstant.red,
                       ),
                     );
-                  } else if (state.showDescriptionErrorMsg == null) {
-                    context.read<ToDoCubit>().save();
-                    AutoRouter.of(context).push(const ToDoRoute());
-                    // AutoRouter.of(context).push;
                   }
                 },
                 child: Text(state.ctaText),
@@ -75,47 +96,40 @@ class CreatePage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    // SizedBox(
-                    //   height: 80,
-                    //   child: TextFormField(
-                    //     style: const TextStyle(
-                    //       fontWeight: FontWeight.w700,
-                    //       fontSize: 20,
-                    //     ),
-                    //     decoration: const InputDecoration(
-                    //       hintText: 'Title',
-                    //       hintStyle: TextStyle(
-                    //         fontWeight: FontWeight.w700,
-                    //         fontSize: 20,
-                    //       ),
-                    //       border: InputBorder.none,
-                    //     ),
-                    //     minLines: null,
-                    //     maxLines: null,
-                    //     expands: true,
-                    //   ),
-                    // ),
-                    SizedBox(
-                      height: 200,
-                      child: TextFormField(
-                        // initialValue: state.entity.description,
-                        controller:
-                            context.read<ToDoCubit>().descriptionController,
-                        // onChanged: (newText) {
-                        //   state.entity.description;
-                        // },
-                        decoration: const InputDecoration(
-                          hintText: 'Description',
-                          hintStyle: TextStyle(
-                            fontSize: 16,
-                          ),
-                          border: InputBorder.none,
-                        ),
-                        // validator: (_) => state.showDescriptionErrorMsg,
-                        minLines: null,
-                        maxLines: null,
-                        expands: true,
+                    TextFormField(
+                      // initialValue: state.entity.description,
+                      controller: context.read<ToDoCubit>().titleController,
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.w600),
+                      decoration: const InputDecoration(
+                        hintText: 'title',
+                        hintStyle: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                        border: InputBorder.none,
                       ),
+                      // validator: (_) => state.showDescriptionErrorMsg,
+                      minLines: 1,
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                    ),
+                    TextFormField(
+                      // initialValue: state.entity.description,
+                      controller:
+                          context.read<ToDoCubit>().descriptionController,
+                      // onChanged: (newText) {
+                      //   state.entity.description;
+                      // },
+                      decoration: const InputDecoration(
+                        hintText: 'Description',
+                        hintStyle: TextStyle(
+                          fontSize: 16,
+                        ),
+                        border: InputBorder.none,
+                      ),
+                      // validator: (_) => state.showDescriptionErrorMsg,
+                      minLines: 1,
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
                     ),
                   ],
                 ),

@@ -11,18 +11,18 @@ class ToDoHistoryEntity with _$ToDoHistoryEntity {
 
   factory ToDoHistoryEntity({
     required int id,
-    // required String title,
+    required String title,
     required String description,
     required bool isDone,
   }) = _ToDoHistoryEntity;
 
   factory ToDoHistoryEntity.newEntity({
-    // required String title,
+    required String title,
     required String description,
   }) =>
       ToDoHistoryEntity(
         id: Random().nextInt(1000),
-        // title: title,
+        title: title,
         description: description,
         isDone: false,
       );

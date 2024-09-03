@@ -14,15 +14,38 @@ class NewsDataSource {
   var logger = Logger();
 
   // ignore: duplicate_ignore
-  Future<List<ArticleModel>> getTopStories(String section) async {
-    final response =
-        await _apiHelper.get(path: ApiPathConstant.topStories(section));
+  // Future<List<ArticleModel>> getTopStories(String section) async {
+  //   final response =
+  //       await _apiHelper.get(path: ApiPathConstant.topStories(section));
 
-    print('Raw API Response: ${response.data}'); // Log the entire response
-    final rawList = response.data as List;
-    // print(rawList);
-    return List.generate(
-        rawList.length.clamp(0, 20), (i) => ArticleModel.fromJson(rawList[i]));
+  //   print('Raw API Response: ${response.data}'); // Log the entire response
+  //   final rawList = response.data as List;
+  //   // print(rawList);
+  //   return List.generate(
+  //       rawList.length.clamp(0, 20), (i) => ArticleModel.fromJson(rawList[i]));
+  // }
+
+  Future<List<ArticleModel>> getTopStories(String section) async {
+    try {
+      final response =
+          await _apiHelper.get(path: ApiPathConstant.topStories(section));
+      print('Raw API Response: ${response.data}'); // Log the entire response
+
+      final rawList = response.data as List?;
+      if (rawList == null) {
+        print('Results list is null');
+        return [];
+      }
+
+      return rawList.map((item) {
+        print('Processing item: $item'); // Log each item
+        return ArticleModel.fromTopStories(item as Map<String, dynamic>);
+      }).toList();
+    } catch (e, stackTrace) {
+      print('Error in getMostPopular: $e');
+      print('Stack trace: $stackTrace');
+      rethrow;
+    }
   }
 
   Future<List<ArticleModel>> getMostPopular() async {
@@ -46,17 +69,4 @@ class NewsDataSource {
       rethrow;
     }
   }
-
-//   Future<List<ArticleModel>> getMostPopular() async {
-//     final response = await _apiHelper.get(path: ApiPathConstant.mostPopular);
-//     // ignore: avoid_print
-//     print('Raw API Response: ${response.data}');  // Log the entire response
-//     final rawList = response.data as List;
-//     // ignore: avoid_print
-//     logger.d(response);
-//     // print('ini responsenya $response');
-//     return List.generate(
-//         rawList.length.clamp(0, 20), (i) => ArticleModel.fromJson(rawList[i]));
-//   }
-// }
 }

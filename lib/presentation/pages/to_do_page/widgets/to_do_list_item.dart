@@ -56,20 +56,22 @@ class ToDoListItem extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Olahraga Lari Pagi',
+                                    history.title,
                                     style: context.textTheme.headlineLarge
                                         ?.copyWith(fontWeight: FontWeight.w600),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
                                     // overflow: TextOverflow.ellipsis,
                                   ),
-                                  UIHelper.verticalSpace(4),
+                                  UIHelper.verticalSpace(8),
                                   Text(
                                     history.description,
                                     style: context.textTheme.bodyMedium
                                         ?.copyWith(
                                             fontSize: 16,
                                             color: ColorConstant.darkGrey),
-                                    // maxLines: 3,
-                                    // overflow: TextOverflow.ellipsis,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
                                     // overflow: TextOverflow.ellipsis,
                                   ),
                                 ],

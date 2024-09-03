@@ -34,7 +34,7 @@ void main() {
     blocTest<ToDoCubit, ToDoState>(
       'emits new state when inputText is called',
       build: () => ToDoCubit(),
-      act: (cubit) => cubit.inputText('New ToDo'),
+      act: (cubit) => cubit.inputTitle('New ToDo'),
       expect: () => [
         ToDoState.initial().copyWith.entity(description: 'New ToDo'),
       ],
@@ -75,14 +75,16 @@ void main() {
       build: () => ToDoCubit(),
       seed: () => ToDoState.initial().copyWith.entity(
         histories: [
-          ToDoHistoryEntity(id: 1, description: 'Test', isDone: false),
+          ToDoHistoryEntity(
+              id: 1, description: 'Test', isDone: false, title: 'test'),
         ],
       ),
       act: (cubit) => cubit.updateToDoStatus(isDone: true, id: 1),
       expect: () => [
         ToDoState.initial().copyWith.entity(
           histories: [
-            ToDoHistoryEntity(id: 1, description: 'Test', isDone: true),
+            ToDoHistoryEntity(
+                id: 1, description: 'Test', isDone: true, title: 'test'),
           ],
         ),
       ],
@@ -101,7 +103,8 @@ void main() {
       'emits new state when editToDo is called',
       build: () => ToDoCubit(),
       act: (cubit) => cubit.editToDo(
-        ToDoHistoryEntity(id: 1, description: 'Edited ToDo', isDone: false),
+        ToDoHistoryEntity(
+            id: 1, description: 'Edited ToDo', isDone: false, title: 'test'),
       ),
       expect: () => [
         ToDoState.initial().copyWith.entity(
@@ -116,11 +119,13 @@ void main() {
       build: () => ToDoCubit(),
       seed: () => ToDoState.initial().copyWith.entity(
         histories: [
-          ToDoHistoryEntity(id: 1, description: 'Test', isDone: false),
+          ToDoHistoryEntity(
+              id: 1, description: 'Test', isDone: false, title: 'test'),
         ],
       ),
       act: (cubit) => cubit.removeToDo(
-        ToDoHistoryEntity(id: 1, description: 'Test', isDone: false),
+        ToDoHistoryEntity(
+            id: 1, description: 'Test', isDone: false, title: 'test'),
       ),
       expect: () => [
         ToDoState.initial().copyWith.entity(

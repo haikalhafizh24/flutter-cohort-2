@@ -9,19 +9,30 @@ part 'to_do_state.dart';
 
 // use HydratedCubit
 class ToDoCubit extends HydratedCubit<ToDoState> {
+  late TextEditingController titleController;
   late TextEditingController descriptionController;
 
   ToDoCubit() : super(ToDoState.initial()) {
+    titleController = TextEditingController()
+      ..addListener(onTitleControllerChange);
     descriptionController = TextEditingController()
       ..addListener(onDescriptionControllerChange);
   }
 
-  // untuk memasukkan textcontroller
-  void onDescriptionControllerChange() {
-    inputText(descriptionController.text);
+  void onTitleControllerChange() {
+    inputTitle(titleController.text);
   }
 
-  void inputText(String val) {
+  // untuk memasukkan textcontroller
+  void onDescriptionControllerChange() {
+    inputDescription(descriptionController.text);
+  }
+
+  void inputTitle(String val) {
+    emit(state.copyWith.entity(title: val));
+  }
+
+  void inputDescription(String val) {
     emit(state.copyWith.entity(description: val));
   }
 
@@ -43,17 +54,29 @@ class ToDoCubit extends HydratedCubit<ToDoState> {
   void saveTextToHistories() {
     emit(state.unmodified.copyWith(showError: false).copyWith.entity(
           histories: state.entity.newHistories,
+          title: titleController.text,
           description: descriptionController.text,
         ));
   }
 
   void updateTextToHistories() {
+    final updatedHistories = state.entity.updateHistories(
+      title: titleController.text,
+      description: descriptionController.text,
+      id: state.entity.id,
+    );
+
     emit(state.unmodified.copyWith(showError: false).copyWith.entity(
-        histories: state.entity.updateHistories(
-          description: state.entity.description,
-          id: state.entity.id,
-        ),
-        description: descriptionController.text));
+          histories: updatedHistories,
+          title: titleController.text,
+          description: descriptionController.text,
+        ));
+  }
+
+  void resetState() {
+    titleController.clear();
+    descriptionController.clear();
+    emit(ToDoState.initial());
   }
 
   void save() {
@@ -63,20 +86,25 @@ class ToDoCubit extends HydratedCubit<ToDoState> {
       } else {
         updateTextToHistories();
       }
+      titleController.clear();
       descriptionController.clear();
-      // emit(state.copyWith(showError: false));
+      emit(state.copyWith(showError: false));
     }, (failure) {
       emit(state.copyWith(showError: true));
     });
   }
 
   void editToDo(ToDoHistoryEntity entity) {
+    titleController.removeListener(onTitleControllerChange);
+    titleController.value = TextEditingValue(text: entity.title);
+    titleController.addListener(onTitleControllerChange);
+
     descriptionController.removeListener(onDescriptionControllerChange);
     descriptionController.value = TextEditingValue(text: entity.description);
-
     descriptionController.addListener(onDescriptionControllerChange);
     emit(
       state.unmodified.copyWith.entity(
+        title: entity.title,
         description: entity.description,
         id: entity.id,
       ),

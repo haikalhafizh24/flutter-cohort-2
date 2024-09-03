@@ -20,13 +20,16 @@ class ToDoState with _$ToDoState {
 
   ToDoState get unmodified => copyWith(entity: entity.copyWith(id: 0));
 
-  bool get isError => showDescriptionErrorMsg == null;
+  bool get isError =>
+      showDescriptionErrorMsg == null && showTitleErrorMsg == null;
 
   bool get newToDo => entity.id == 0;
 
   bool isEdited(id) => id == entity.id;
 
   String get ctaText => newToDo ? 'Save' : 'Update';
+
+  String? get showTitleErrorMsg => showError ? entity.titleErrorMsg : null;
 
   String? get showDescriptionErrorMsg =>
       showError ? entity.descriptionErrorMsg : null;
